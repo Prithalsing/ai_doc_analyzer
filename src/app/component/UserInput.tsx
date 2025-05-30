@@ -14,7 +14,7 @@ const UserInput = () => {
 
   // Store the last analyzed URL and result for revision
   const [lastUrl, setLastUrl] = useState<string | null>(null);
-  const [lastAnalysis, setLastAnalysis] = useState<string | null>(null);
+  const [lastContent, setLastContent] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,9 +22,8 @@ const UserInput = () => {
     setError(null);
     setResult(null);
     setRevised(null);
-    setLastAnalysis(null);
-    setLastUrl(null);
-
+    setLastContent(null);
+    
     try {
       const res = await fetch("http://localhost:8000/analyze", {
         method: "POST",
@@ -37,10 +36,9 @@ const UserInput = () => {
         throw new Error(data.detail || "Something went wrong");
       }
 
-      const text = await res.text();
-      setResult(text);
-      setLastAnalysis(text);
-      setLastUrl(url);
+      const data = await res.json();
+      setResult(data.analysis);  // Store analysis part
+      setLastContent(data.content);  // Store content part
     } catch (err: Error | unknown) {
       setError(err instanceof Error ? err.message : "Error occurred");
     } finally {
@@ -65,17 +63,16 @@ const UserInput = () => {
   };
 
   const handleRevise = async () => {
-    if (!lastAnalysis || !result) return;
+    if (!lastContent || !result) return;
     setRevising(true);
     setRevised(null);
     try {
-      // Use the content and analysis from the last analyze response
       const res = await fetch("http://localhost:8000/revise", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          content: result,
-          suggestions: lastAnalysis,
+          content: lastContent,
+          suggestions: result  // This is now the analysis object
         }),
       });
       if (!res.ok) {

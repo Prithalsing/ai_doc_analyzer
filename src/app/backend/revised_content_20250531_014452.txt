@@ -1,0 +1,81 @@
+Table of Contents
+
+*   [What are MoEngage Data Centers?](#what-are-moengage-data-centers)
+*   [Why Different Data Centers?](#why-different-data-centers)
+*   [Choosing the Right Data Center for Your Region](#choosing-the-right-data-center-for-your-region)
+*   [Using the MoEngage SDK with Your Data Center](#using-the-moengage-sdk-with-your-data-center)
+*   [Finding Your REST API Endpoint](#finding-your-rest-api-endpoint)
+
+---
+
+## What are MoEngage Data Centers? <a name="what-are-moengage-data-centers"></a>
+
+MoEngage uses multiple secure data centers to store and process your customer data. When you sign up for MoEngage, you'll be assigned to a specific data center. This data center will house all your user and event data.
+
+Your MoEngage Onboarding Manager can help you understand which data center best suits your needs before you sign up. After you've signed up, you can easily identify your data center from your Dashboard URL.
+
+Need more info?  [Raise a support ticket](link_to_support) to learn more about our different data centers.
+
+**Fair Usage Policy, Data Archival Policies, and Data Tracking Policies:** Be sure to review our [Fair Usage Policy](link_to_fair_usage), [Data Archival Policies](link_to_archival_policies), and [Data Tracking Policies](link_to_tracking_policies) for comprehensive information about data handling within MoEngage.
+
+## Why Different Data Centers? <a name="why-different-data-centers"></a>
+
+Having multiple data centers helps us optimize MoEngage for you:
+
+*   **Performance:** Distributing users across data centers helps us ensure that each data center operates smoothly and quickly, providing a better experience for everyone.
+*   **Compliance:** Some businesses have requirements to store their user data in a specific country or region to comply with local regulations. Our data centers allow you to meet these needs.
+
+When you sign up with MoEngage, your user data will be saved in the data center you choose.
+
+## Choosing the Right Data Center for Your Region <a name="choosing-the-right-data-center-for-your-region"></a>
+
+When you sign up for MoEngage, you can choose the data center that best aligns with your needs.
+
+**Recommendation:** If you don't have specific data residency requirements, we recommend allowing us to select the optimal data center for performance. However, if you have specific geographic requirements, please see the following guidelines:
+
+To ensure data privacy and compliance, sign up with the following data centers to save your user data in these specific regions:
+
+*   **United States (US):** DC-01 or DC-04
+*   **European Union (EU):** DC-02
+*   **India:** DC-03
+*   **Singapore:** DC-05
+*   **Indonesia:** DC-06
+
+If you don't need to save your user data in a specific region, signing up with any data center has no impact. All our data centers are identical and support similar functionalities, SLAs (Service Level Agreements), and latencies.
+
+**Important Note:** All data centers offer the same great features, security, and reliability.
+
+## Using the MoEngage SDK with Your Data Center <a name="using-the-moengage-sdk-with-your-data-center"></a>
+
+To track user data from your mobile app or website, you'll use the MoEngage SDK (Software Development Kit). The SDK is a small piece of software that helps your app talk to MoEngage.
+
+Here’s a general overview of how the SDK works:
+
+1.  **Integration:** You'll integrate the MoEngage SDK into your app or website. This involves adding a few lines of code.
+2.  **Data Collection:** The SDK automatically collects data about user behavior, such as app usage, page views, and button clicks.
+3.  **Data Transmission:** The SDK securely sends this data to MoEngage, where it's stored in your designated data center.
+
+When you integrate the MoEngage SDK, ensure you follow the integration steps corresponding to your data center. You can find detailed instructions in our SDK documentation:
+
+[Android](link_to_android_sdk) | [iOS](link_to_ios_sdk) | [Web](link_to_web_sdk)
+
+## Finding Your REST API Endpoint <a name="finding-your-rest-api-endpoint"></a>
+
+In addition to the SDK, you can also send data to MoEngage using our REST APIs (Application Programming Interfaces). REST APIs allow you to send data directly from your servers to MoEngage.
+
+To ensure seamless integration and optimal performance, it's best practice to use the REST API corresponding to your registered data center. For example, if your app is registered in DC-01, you must use the REST API for DC-01.
+
+**Data Centers, URLs, and API Hostnames**
+
+| Data Center Name | Dashboard URL        | REST API Hostname      |
+|-------------------|----------------------|--------------------------|
+| DC-01             |  (example URL)     | (example API hostname)   |
+| DC-02             |  (example URL)     | (example API hostname)   |
+| DC-03             |  (example URL)     | (example API hostname)   |
+| DC-04             |  (example URL)     | (example API hostname)   |
+| DC-05             |  (example URL)     | (example API hostname)   |
+| DC-06             |  (example URL)     | (example API hostname)   |
+
+**Information**
+
+Once captured in a workspace, data cannot be migrated across a new workspace to ensure data resides in the correct data center.
