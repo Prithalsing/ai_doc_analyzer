@@ -2,10 +2,23 @@
 import { useState } from "react";
 import { FileText, Link, Loader2, AlertCircle, CheckCircle, Copy, Maximize2, Minimize2, Sparkles, Zap, ArrowRight, Download, Share2 } from "lucide-react";
 
+interface CategoryData {
+  score: 'Excellent' | 'Good' | 'Fair' | 'Poor';
+  issues: string[];
+  suggestions: string[];
+}
+
+interface Analysis {
+  readability: CategoryData;
+  structure: CategoryData;
+  completeness: CategoryData;
+  style_guidelines: CategoryData;
+}
+
 const UserInput = () => {
   const [url, setUrl] = useState("");
   const [loading, setLoading] = useState(false);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<Analysis | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isExpanded, setIsExpanded] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -49,7 +62,7 @@ const UserInput = () => {
   const handleCopy = async () => {
     if (result) {
       try {
-        await navigator.clipboard.writeText(result);
+        await navigator.clipboard.writeText(JSON.stringify(result, null, 2));
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       } catch (err) {
@@ -72,18 +85,25 @@ const UserInput = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           content: lastContent,
-          suggestions: result  // This is now the analysis object
+          suggestions: {
+            readability: result.readability,
+            structure: result.structure,
+            completeness: result.completeness,
+            style_guidelines: result.style_guidelines
+          }
         }),
       });
+      
       if (!res.ok) {
         const data = await res.json();
         throw new Error(data.detail || "Revision failed");
       }
+      
       const data = await res.json();
       setRevised(data.revised);
     } catch (err) {
       console.error('Revision error:', err);
-      setRevised("Revision failed.");
+      setRevised(err instanceof Error ? err.message : "Revision failed");
     } finally {
       setRevising(false);
     }
@@ -269,19 +289,19 @@ const UserInput = () => {
                     >
                       <div className="prose prose-invert prose-sm max-w-none">
                         <pre className="whitespace-pre-wrap text-gray-200 leading-relaxed font-mono text-sm bg-transparent border-none p-0 m-0">
-                          {result}
+                          {JSON.stringify(result, null, 2)}
                         </pre>
                       </div>
                     </div>
                     
-                    {!isExpanded && result.length > 1000 && (
+                    {!isExpanded && result && JSON.stringify(result).length > 1000 && (
                       <div className="mt-6 pt-4 border-t border-white/10 text-center">
                         <button
                           onClick={toggleExpand}
                           className="text-purple-400 hover:text-purple-300 font-medium flex items-center gap-2 mx-auto transition-colors duration-200 group"
                         >
                           <Maximize2 className="w-4 h-4 group-hover:scale-110 transition-transform duration-200" />
-                          Show full analysis ({Math.ceil(result.length / 1000)}k+ characters)
+                          Show full analysis ({Math.ceil(JSON.stringify(result).length / 1000)}k+ characters)
                         </button>
                       </div>
                     )}
@@ -298,9 +318,11 @@ const UserInput = () => {
                     <div className="flex items-center gap-6">
                       <span className="flex items-center gap-1">
                         <FileText className="w-4 h-4" />
-                        {result.length.toLocaleString()} chars
+                        {result ? JSON.stringify(result).length.toLocaleString() : '0'} chars
                       </span>
-                      <span>{result.split('\n').length} lines</span>
+                      <span>
+                        {result ? JSON.stringify(result).split('\n').length : 0} lines
+                      </span>
                     </div>
                   </div>
                 </div>

@@ -172,26 +172,25 @@ Remember:
 
 
 def revise_article_with_gemini(original_content, analysis):
-    """
-    Revise the article based on analysis suggestions.
-    
-    Args:
-        original_content (str): Original article content
-        analysis (dict): Analysis results with suggestions
-        
-    Returns:
-        str: Revised article content
-    """
+    """Revise the article based on analysis suggestions."""
     model = genai.GenerativeModel("gemini-2.0-flash")
     
     # Convert analysis to readable format for the prompt
     suggestions_text = ""
     for category, data in analysis.items():
         suggestions_text += f"\n{category.title()} Issues:\n"
-        for issue in data.get('issues', []):
+        if isinstance(data, dict):
+            issues = data.get('issues', [])
+            suggestions = data.get('suggestions', [])
+        else:
+            # Handle Pydantic model
+            issues = data.issues
+            suggestions = data.suggestions
+            
+        for issue in issues:
             suggestions_text += f"- {issue}\n"
         suggestions_text += f"{category.title()} Suggestions:\n"
-        for suggestion in data.get('suggestions', []):
+        for suggestion in suggestions:
             suggestions_text += f"- {suggestion}\n"
     
     prompt = f"""

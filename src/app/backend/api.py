@@ -35,7 +35,7 @@ class AnalysisResponse(BaseModel):
 
 class ReviseRequest(BaseModel):
     content: str
-    suggestions: Analysis
+    suggestions: Dict[str, CategoryData]  # Change Analysis to Dict[str, CategoryData]
 
 class ReviseResponse(BaseModel):
     revised: str
@@ -67,9 +67,18 @@ def revise_doc(request: ReviseRequest):
     if not request.content or not request.suggestions:
         raise HTTPException(status_code=400, detail="Content and suggestions are required")
     try:
-        revised = revise_article_with_gemini(request.content, request.suggestions)
+        # Convert suggestions to dict format that revise_article_with_gemini expects
+        suggestions_dict = {
+            k: {
+                'score': v.score,
+                'issues': v.issues,
+                'suggestions': v.suggestions
+            } for k, v in request.suggestions.items()
+        }
+        revised = revise_article_with_gemini(request.content, suggestions_dict)
         return {"revised": revised}
     except Exception as e:
+        print(f"Error in revision: {str(e)}")  # Add debugging
         raise HTTPException(status_code=500, detail=str(e))
 
 if __name__ == "__main__":
