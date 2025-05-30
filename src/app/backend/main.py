@@ -1,7 +1,8 @@
-import sys
-import time
 import os
+import time
 import json
+import sys
+from dotenv import load_dotenv
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
@@ -9,9 +10,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import google.generativeai as genai
 
+# Load environment variables from .env file
+load_dotenv()
+
 # Set your Gemini API Key
-GEMINI_API_KEY = "AIzaSyB7x81BRsUcQwfMcnENs0NumkaaRPkY_gM"
+GEMINI_API_KEY = os.getenv("GEMINI_API")
+if not GEMINI_API_KEY:
+    raise ValueError("GEMINI_API not found in environment variables")
+
 genai.configure(api_key=GEMINI_API_KEY)
+
 
 def scrape_page(url):
     options = Options()
