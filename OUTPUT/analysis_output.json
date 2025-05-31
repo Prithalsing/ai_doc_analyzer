@@ -1,0 +1,54 @@
+{
+  "url": "https://help.moengage.com/hc/en-us/articles/360058616131-Delivery-Types-MoEngage-Channels",
+  "timestamp": "2025-05-31T14:43:41.968354",
+  "overall_score": "Fair",
+  "analysis": {
+    "readability": {
+      "score": "Fair",
+      "issues": [
+        "The language is generally accessible, but some descriptions could be simplified for non-technical marketers.",
+        "The table format is good for quick reference, but could benefit from examples to illustrate each delivery type."
+      ],
+      "suggestions": [
+        "Provide real-world examples of how each delivery type is used in marketing scenarios.",
+        "Define potentially confusing terms like 'orchestration' and 'Geo Fences' in simpler language or link to definitions."
+      ]
+    },
+    "structure": {
+      "score": "Fair",
+      "issues": [
+        "Repetitive content.",
+        "The article lacks clear hierarchy. The introduction is very short."
+      ],
+      "suggestions": [
+        "Consolidate the repeated content to eliminate redundancy.",
+        "Expand the introduction to provide more context and purpose of delivery types.",
+        "Consider adding subheadings to break down the table into logical sections (e.g., Triggered Deliveries, Scheduled Deliveries)."
+      ]
+    },
+    "completeness": {
+      "score": "Fair",
+      "issues": [
+        "The descriptions for each delivery type are very brief and lack detail.",
+        "The article doesn't explain *why* a marketer would choose one delivery type over another.",
+        "Missing information about limitations or best practices for each delivery type."
+      ],
+      "suggestions": [
+        "Expand the descriptions to include more details about how each delivery type works.",
+        "Add a section discussing the advantages and disadvantages of each delivery type.",
+        "Include best practices for using each delivery type effectively.",
+        "Mention any limitations or constraints associated with each delivery type."
+      ]
+    },
+    "style_guidelines": {
+      "score": "Good",
+      "issues": [
+        "Inconsistent capitalization in the 'Channels Supported' section of the table."
+      ],
+      "suggestions": [
+        "Ensure consistent capitalization (e.g., use sentence case or title case) for all channel names in the table.",
+        "Review the MoEngage documentation style guide and ensure adherence throughout the article."
+      ]
+    }
+  }
+}
