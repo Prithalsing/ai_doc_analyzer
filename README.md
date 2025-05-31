@@ -11,7 +11,7 @@ This project provides an AI-powered tool that analyzes and revises MoEngage docu
 This version uses LangChain to analyze, summarize, and revise documentation intelligently.
 
 ```bash
-cd backend_just
+cd backend
 python main.py
 ```
 
